@@ -4,7 +4,7 @@ using System.Threading;
 using System.Reflection;
 ﻿using UnityEngine;
 
-public class ConsoleInputManager : MonoBehaviour {
+public class S_ConsoleInputManager : MonoBehaviour {
 
 	void Awake () 
 	{

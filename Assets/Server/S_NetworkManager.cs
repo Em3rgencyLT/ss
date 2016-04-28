@@ -2,7 +2,7 @@ using System;
 ﻿using UnityEngine;
 using UnityEngine.Networking;
 
-public class NetworkManager : MonoBehaviour {
+public class S_NetworkManager : MonoBehaviour {
 
 	void Start () 
 	{

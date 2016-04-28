@@ -2,7 +2,7 @@
 using UnityEngine.Networking;
 using System.Net;
 
-public class NetworkManager : MonoBehaviour {
+public class C_NetworkManager : MonoBehaviour {
 
     public NetworkClient myClient;
 
