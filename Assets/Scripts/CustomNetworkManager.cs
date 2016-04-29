@@ -34,9 +34,10 @@ public class CustomNetworkManager : MonoBehaviour {
     private void OnAClientConnected (NetworkMessage netMsg)
     {
         Console.WriteLine("Client from " + netMsg.conn.address + " connected.");
-		Spawner spawner = GameObject.Find("Game Manager").GetComponent<Spawner>();
-		spawner.SpawnPlayerOnServer(netMsg.conn);
-		spawner.RpcSpawnPlayerOnClient();
+        //GameObject gameManager = GameObject.Find("Game Manager");
+        //Spawner spawner = gameManager.GetComponent<Spawner>();
+		//spawner.SpawnPlayerOnServer(netMsg.conn);
+		//spawner.RpcSpawnPlayerOnClient();
         //TODO: store and handle connected player data
     }
 	

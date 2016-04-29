@@ -1,3 +1,9 @@
+/*
+*   This script is fucking terrified of being on the same object as a NetworkIdentity.
+*   Potentially other kinds of objects/scripts too. Unity is known for having a borked Console.
+*   If your Console I/O stops working properly, try to put this on its own object to debug.
+*/
+
 using System;
 using System.Threading;
 ﻿using UnityEngine;
