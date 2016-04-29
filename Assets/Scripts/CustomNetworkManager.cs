@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
-using System.Collections;
+using UnityEngine.Networking;
+using System;
+using System.Net;
 
 public class CustomNetworkManager : MonoBehaviour {
 
@@ -10,7 +12,7 @@ public class CustomNetworkManager : MonoBehaviour {
 		NetworkServer.Listen(1314);
 
 		NetworkServer.RegisterHandler(MsgType.Connect, OnAClientConnected);
-        	NetworkServer.RegisterHandler(MsgType.Disconnect, OnAClientDisconnected);
+        NetworkServer.RegisterHandler(MsgType.Disconnect, OnAClientDisconnected);
 
 		Console.WriteLine("Server started.");
 	}
@@ -18,51 +20,43 @@ public class CustomNetworkManager : MonoBehaviour {
 	public void ConnectToServer(string address)
 	{
 		myClient = new NetworkClient();
-        	
-        	string lookup = HostnameLookup(address);
-        	if(lookup.Length > 0)
-        	{
-            		myClient.Connect(lookup, 1314);
-        	}
-        	else
-        	{
-            		Application.Quit();
-        	}
-
-		myClient.RegisterHandler(MsgType.Connect, OnConnectedToServer);
+        string lookup = HostnameLookup(address);
+        if(lookup.Length > 0)
+        {
+            myClient.Connect(lookup, 1314);
+        }
+        else
+        {
+            Application.Quit();
+        }
 	}
 
-    	private void OnAClientConnected (NetworkMessage netMsg)
-    	{
-        	Console.WriteLine("Client from " + netMsg.conn.address + " connected.");
+    private void OnAClientConnected (NetworkMessage netMsg)
+    {
+        Console.WriteLine("Client from " + netMsg.conn.address + " connected.");
 		Spawner spawner = GameObject.Find("Game Manager").GetComponent<Spawner>();
 		spawner.SpawnPlayerOnServer(netMsg.conn);
 		spawner.RpcSpawnPlayerOnClient();
-        	//TODO: store and handle connected player data
-    	}
+        //TODO: store and handle connected player data
+    }
 	
-    	private void OnAClientDisconnected (NetworkMessage netMsg)
-    	{
-        	Console.WriteLine(netMsg.conn.address + " disconnected.");
-        	//TODO: handle player disconnect
-    	}
+    private void OnAClientDisconnected (NetworkMessage netMsg)
+    {
+        Console.WriteLine(netMsg.conn.address + " disconnected.");
+        //TODO: handle player disconnect
+    }
 
-    	private void OnConnectedToServer(NetworkMessage netMsg)
-    	{
-        	Debug.Log("Connected to server");
-    	}
-
-    	private string HostnameLookup (string hostname)
-    	{
-		IPHostEntry host;
+    private string HostnameLookup (string hostname)
+    {
+	    IPHostEntry host;
 		try
 		{
-	    		host = Dns.GetHostEntry(hostname);
+	    	host = Dns.GetHostEntry(hostname);
 		}
 		catch (System.Net.Sockets.SocketException e)
 		{
-	    		Debug.LogError(e);
-	    		return "";
+	    	Debug.LogError(e);
+	    	return "";
 		}
 		return host.AddressList[0].ToString();
     	}

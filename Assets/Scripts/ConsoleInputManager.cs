@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.Threading;
-using System.Reflection;
 ﻿using UnityEngine;
 
 public class ConsoleInputManager : MonoBehaviour {
@@ -28,21 +26,21 @@ public class ConsoleInputManager : MonoBehaviour {
 			if(userInput.Length > 0){
 				switch (userInput.ToLowerInvariant())
 				{
-				    	case "help":
-				        	PrintHelp();
-				        	break;
+				    case "help":
+				        PrintHelp();
+				        break;
 					case "start":
 						StartServer();
 						break;
-				    	case "quit":
-				    	case "exit":
-				    	case "stop":
-				        	QuitApplication();
-				        	break;
-				    	default:
-				        	Console.WriteLine("Command " + userInput + " not found.");
-				        	PrintHelp();
-				        	break;
+				    case "quit":
+				    case "exit":
+				    case "stop":
+				        QuitApplication();
+				        break;
+				    default:
+				        Console.WriteLine("Command " + userInput + " not found.");
+				        PrintHelp();
+				        break;
 				}
 			}
 		}
@@ -50,14 +48,14 @@ public class ConsoleInputManager : MonoBehaviour {
 
 	private void PrintHelp ()
 	{
-        	Console.WriteLine("help - Displays this information text.");
+        Console.WriteLine("help - Displays this information text.");
 		Console.WriteLine("start - Start the server.");
-        	Console.WriteLine("quit/exit/stop - Shuts down this application.");
-    	}
+        Console.WriteLine("quit/exit/stop - Shuts down this application.");
+    }
 	
 	private void StartServer()
 	{
-		CustomNetworkManager networkManager = GameObject.Find("Custom Network Manager").GetComponent<CustomNetworkManger>();
+		CustomNetworkManager networkManager = GameObject.Find("Custom Network Manager").GetComponent<CustomNetworkManager>();
 		networkManager.StartServer();
 	}
 
