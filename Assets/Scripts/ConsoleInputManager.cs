@@ -11,7 +11,8 @@ using System.Threading;
 public class ConsoleInputManager : MonoBehaviour {
 
 	void Awake () 
-	{
+	{	
+		DontDestroyOnLoad(transform.gameObject);
 		Thread _inputThread = new Thread(_inputFunction);
 		_inputThread.Start();
 		Console.Clear();
@@ -27,9 +28,11 @@ public class ConsoleInputManager : MonoBehaviour {
 	private void _inputFunction ()
 	{
 		string userInput;
-		while(true){
+		while(true)
+		{
 			userInput = Console.ReadLine();
-			if(userInput.Length > 0){
+			if(userInput.Length > 0)
+			{
 				switch (userInput.ToLowerInvariant())
 				{
 				    case "help":
@@ -54,15 +57,15 @@ public class ConsoleInputManager : MonoBehaviour {
 
 	private void PrintHelp ()
 	{
-        Console.WriteLine("help - Displays this information text.");
+        	Console.WriteLine("help - Displays this information text.");
 		Console.WriteLine("start - Start the server.");
-        Console.WriteLine("quit/exit/stop - Shuts down this application.");
-    }
+        	Console.WriteLine("quit/exit/stop - Shuts down this application.");
+    	}
 	
 	private void StartServer()
 	{
 		CustomNetworkManager networkManager = GameObject.Find("Custom Network Manager").GetComponent<CustomNetworkManager>();
-		networkManager.StartServer();
+		networkManager.StartupServer();
 	}
 
 	private void QuitApplication ()
