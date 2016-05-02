@@ -12,7 +12,6 @@ public class ConsoleInputManager : MonoBehaviour {
 
 	void Awake () 
 	{	
-		DontDestroyOnLoad(transform.gameObject);
 		Thread _inputThread = new Thread(_inputFunction);
 		_inputThread.Start();
 		Console.Clear();
