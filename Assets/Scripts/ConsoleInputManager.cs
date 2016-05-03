@@ -10,6 +10,10 @@ using System.Threading;
 
 public class ConsoleInputManager : MonoBehaviour {
 
+    private CustomNetworkManager networkManager;
+    private bool needToStartServer;
+    private bool needToQuit;
+
 	void Awake () 
 	{	
 		Thread _inputThread = new Thread(_inputFunction);
@@ -23,6 +27,26 @@ public class ConsoleInputManager : MonoBehaviour {
 		Console.WriteLine(topBar);
 		PrintHelp();
 	}
+
+    void Start()
+    {
+        networkManager = GameObject.Find("Custom Network Manager").GetComponent<CustomNetworkManager>();
+        needToStartServer = false;
+        needToQuit = false;
+    }
+
+    void Update()
+    {
+        if (needToStartServer)
+        {
+            networkManager.StartupServer();
+            needToStartServer = false;
+        }
+        if (needToQuit)
+        {
+            Application.Quit();
+        }
+    }
 
 	private void _inputFunction ()
 	{
@@ -56,19 +80,21 @@ public class ConsoleInputManager : MonoBehaviour {
 
 	private void PrintHelp ()
 	{
-        	Console.WriteLine("help - Displays this information text.");
+        Console.WriteLine("help - Displays this information text.");
 		Console.WriteLine("start - Start the server.");
-        	Console.WriteLine("quit/exit/stop - Shuts down this application.");
-    	}
-	
-	private void StartServer()
+        Console.WriteLine("quit/exit/stop - Shuts down this application.");
+    }
+
+    //Unity doesn't like several things to do with servers running on its own threads
+    //So we set booleans, so the main thread (Update()) can do them instead.
+
+    private void StartServer()
 	{
-		CustomNetworkManager networkManager = GameObject.Find("Custom Network Manager").GetComponent<CustomNetworkManager>();
-		networkManager.StartupServer();
+        needToStartServer = true;
 	}
 
 	private void QuitApplication ()
 	{
-		Application.Quit();
+        needToQuit = true;
 	}
 }

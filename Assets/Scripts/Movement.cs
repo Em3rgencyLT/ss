@@ -35,13 +35,13 @@ public class Movement : NetworkBehaviour {
         transform.position = transform.position + velocity * Time.fixedDeltaTime;
         transform.rotation = transform.rotation * Quaternion.Euler(rotateY);
         Transform headTransform = transform.FindChild("Head").transform;
-        Quaternion newHeadRotation = headTransform.rotation * Quaternion.Euler(rotateX);
+        Quaternion newHeadRotation = headTransform.localRotation * Quaternion.Euler(rotateX);
         Quaternion maxDown = Quaternion.Euler(new Vector3(maxLookAngleDown, 0f, 0f));
         Quaternion maxUp = Quaternion.Euler(new Vector3(maxLookAngleUp, 0f, 0f));
         
         if(newHeadRotation.x < maxDown.x && newHeadRotation.x > maxUp.x)
         {
-            headTransform.rotation = newHeadRotation;
+            headTransform.localRotation = newHeadRotation;
         }
     }
 }
